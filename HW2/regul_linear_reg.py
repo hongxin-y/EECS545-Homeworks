@@ -5,7 +5,6 @@ import pandas as pd
 def load_data(filename):
     data = scio.loadmat(filename)
     X, Y = data.get('X'). data, data.get('y'). data
-    print(np.ones(150).shape, np.transpose(X[:150]).shape)
     X_train, Y_train = np.r_[[np.ones(150)], np.transpose(X[:150])], Y[:150]
     X_test, Y_test = np.r_[[np.ones(len(X)-150)], np.transpose(X[150:])], Y[150:]
     return X_train, Y_train, X_test, Y_test
