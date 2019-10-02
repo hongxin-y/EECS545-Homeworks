@@ -10,18 +10,17 @@ def load_data(filename):
     X_test, Y_test = np.r_[[np.ones(len(X)-150)], np.transpose(X[150:])], Y[150:]
     return X_train, Y_train, X_test, Y_test
 
-def train(X_train, Y_train):
+def train(X_train, Y_train, lam):
     p, n = X_train.shape[0]-1, X_train.shape[1]
-    lam = 10
     I_hat = np.eye(p+1)
     I_hat[0][0] = 0
-    A = np.dot(X_train, np.transpose(X_train)) - 2*lam*I_hat
+    A = np.dot(X_train, np.transpose(X_train)) + lam*I_hat
     C = np.dot(X_train, Y_train)
     w = np.dot(np.linalg.inv(A), C)
     return w
 
 X_train, Y_train, X_test, Y_test = load_data("bodyfat_data.mat")
-w = train(X_train, Y_train)
+w = train(X_train, Y_train, 10)
 
 print("parameters w = ", w)
 res = np.dot(np.transpose(X_test), w) - Y_test

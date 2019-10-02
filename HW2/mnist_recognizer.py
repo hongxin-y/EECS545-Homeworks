@@ -32,7 +32,7 @@ class logistic_regression():
                 break
             self.w = self.w - np.dot(np.linalg.inv(self.hessian), self.grad)
             self.deriv()
-            val = -np.sum(np.log(self.P)) + self.lam*np.sqrt(np.dot(np.transpose(self.w), self.w))
+            val = -np.sum(np.log(self.P)) + self.lam*np.dot(np.transpose(self.w), self.w)
             print("objective function: %.2f"%val)
 
     #this function is to do the calssification work using given X, the threold is 0.5.
