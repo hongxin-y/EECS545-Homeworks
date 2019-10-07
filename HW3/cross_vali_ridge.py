@@ -102,4 +102,4 @@ for lam in range(201):
         cve_min = cve
         lam_star = lam
         df_star = train(X_train_valid, Y_train_valid, lam)[1]
-print("lambda = {:d}, df = {:.2f}, CV error = {:.5f}".format(lam_star, df_star, cve_min))
+print("lambda = {:d}, df = {:.3f}, CV error = {:.3f}".format(lam_star, df_star, cve_min))

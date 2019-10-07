@@ -66,21 +66,22 @@ def train(model, method = "BGD", K = 500):
         model.matrix_method()
     return model
 
-def model_display(filename, method = "BGD", lr = 0.05):
+def model_display(filename, method = "BGD", lr = 0.05, K = 500):
     X_train, Y_train, X_test, Y_test = load_data(filename)
     model = linear_regression(X_train, Y_train, lr)
+    model = train(model, method, K)
     if method == "BGD":
-        model = train(model, method, 500)
+        method_name = "Batch Gradient Descent"
     elif method == "SGD":
-        model = train(model, method, 500)
+        method_name = "Stochastic Gradient Descent"
     elif method == "MAT":
-        model = train(model, method)
+        method_name = "Directly Computation"
     X_test, Y_test = sphere(X_test, Y_test)
     Y_hat = model.fit(X_test)
     error = mse(Y_hat, Y_test)
     #print(model.w.T)
-    print("mse on test set based on {} is {:5f}".format(method, error))
+    print("MSE on test set based on {} is {:3f}".format(method_name, error))
 
-model_display("boston-corrected", method = "BGD", lr = 0.05)
-model_display("boston-corrected", method = "SGD", lr = 0.0005)
+model_display("boston-corrected", method = "BGD", lr = 0.05, K = 500)
+model_display("boston-corrected", method = "SGD", lr = 0.0005, K = 500)
 model_display("boston-corrected", method = "MAT")
