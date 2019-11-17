@@ -12,15 +12,19 @@ idx = np.argsort(-eigenvalues)
 eigenvalues = eigenvalues[idx]
 U = U[:,idx]
 plt.semilogy(eigenvalues)
+plt.xlabel("Features")
+plt.ylabel("log-eigenvalues")
 plt.show()
 
-total = np.dot(eigenvalues, np.ones(eigenvalues.shape))
+total = np.sum(eigenvalues)
 percentage = np.cumsum(eigenvalues) / total
 idx_95 = np.where(percentage>=0.95)[0][0]
 idx_99 = np.where(percentage>=0.99)[0][0]
 
-print("95% data can be explained within {} components.".format(idx_95))
-print("99% data can be explained within {} components.".format(idx_99))
+print("95% data can be explained within {} components.".format(idx_95+1))
+print("The percentage reduction in dimension is {}%".format((1-idx_95/eigenvalues.shape[0])*100))
+print("99% data can be explained within {} components.".format(idx_99+1))
+print("The percentage reduction in dimension is {}%".format((1-idx_99/eigenvalues.shape[0])*100))
 
 fig, ax = plt.subplots(nrows=4, ncols=5)
 x = np.mean(X, axis=1).reshape(r,c)
